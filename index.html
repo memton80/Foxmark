@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foxmark</title>
+    <!--
+      Règle du projet : AUCUN style dans le HTML.
+      Toutes les feuilles de style vivent dans /src/styles/*.css
+      et sont importées depuis src/main.ts (Vite les émet en <link> externes).
+    -->
+  </head>
+  <body>
+    <div id="app">
+      <header id="chrome">
+        <div id="tab-bar"></div>
+        <div id="toolbar"></div>
+      </header>
+      <main id="workspace">
+        <aside id="sidebar"></aside>
+        <section id="content"></section>
+      </main>
+      <div id="command-palette-root"></div>
+      <div id="dialog-root"></div>
+      <div id="toast-root"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

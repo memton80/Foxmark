@@ -1,0 +1,33 @@
+/*
+ * preview.css — Panneau d'aperçu live (vue scindée).
+ *
+ * L'aperçu est une <iframe> dont le document complet est produit par la
+ * MÊME commande Rust (`render_markdown`) que celle utilisée pour l'export
+ * PDF, avec la MÊME feuille de style : l'aperçu est donc fidèle au PDF.
+ */
+
+.preview-pane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--color-border-soft);
+  background: var(--color-surface);
+}
+
+.preview-pane.hidden {
+  display: none;
+}
+
+.preview-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+  background: transparent;
+}
+
+.split-view {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}

@@ -1,0 +1,369 @@
+/*
+ * github-default.css — Thème d'export par défaut de Foxmark.
+ *
+ * Reproduction fidèle du rendu Markdown de GitHub (typographie, tableaux,
+ * blocs de code, citations, listes de tâches, badges).
+ *
+ * Cette feuille est utilisée par :
+ *   1. l'aperçu live (iframe) — via la même commande Rust `render_markdown` ;
+ *   2. l'export PDF (headless Chrome) — garantissant un rendu identique.
+ *
+ * Les règles @media print gèrent les sauts de page. Deux classes utilitaires
+ * sont disponibles dans les documents : .page-break (saut après l'élément)
+ * et .page-break-before (saut avant l'élément).
+ */
+
+:root {
+  --gh-text: #1f2328;
+  --gh-text-muted: #59636e;
+  --gh-bg: #ffffff;
+  --gh-border: #d1d9e0;
+  --gh-border-muted: #d1d9e0b3;
+  --gh-accent: #0969da;
+  --gh-code-bg: #f6f8fa;
+  --gh-mark-bg: #fff8c5;
+  --gh-danger: #d1242f;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--gh-bg);
+}
+
+.markdown-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  color: var(--gh-text);
+  background: var(--gh-bg);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.markdown-body > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-body > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Titres ---- */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--gh-border-muted);
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--gh-border-muted);
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: 0.875em;
+}
+
+.markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--gh-text-muted);
+}
+
+/* ---- Paragraphes et blocs ---- */
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* ---- Liens ---- */
+.markdown-body a {
+  color: var(--gh-accent);
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Emphase ---- */
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body del {
+  color: var(--gh-text-muted);
+}
+
+/* ---- Citations ---- */
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: var(--gh-text-muted);
+  border-left: 0.25em solid var(--gh-border);
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Listes ---- */
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body li + li {
+  margin-top: 0.25em;
+}
+
+.markdown-body li > p {
+  margin-top: 16px;
+}
+
+/* Listes de tâches GFM */
+.markdown-body ul.contains-task-list,
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body ul:has(> li > input[type="checkbox"]) {
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+.markdown-body li > input[type="checkbox"] {
+  margin: 0 0.35em 0.25em -0.6em;
+  vertical-align: middle;
+  accent-color: var(--gh-accent);
+}
+
+/* ---- Code ---- */
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+.markdown-body code {
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  border-radius: 6px;
+  background: var(--gh-code-bg);
+  white-space: break-spaces;
+}
+
+.markdown-body pre {
+  font-size: 85%;
+  line-height: 1.45;
+  padding: 16px;
+  overflow: auto;
+  border-radius: 6px;
+  background: var(--gh-code-bg);
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  background: transparent;
+  border: 0;
+  white-space: pre;
+  word-break: normal;
+  overflow: visible;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 0.25rem;
+  font-size: 11px;
+  line-height: 10px;
+  color: var(--gh-text);
+  vertical-align: middle;
+  background-color: var(--gh-code-bg);
+  border: 1px solid var(--gh-border);
+  border-bottom-color: var(--gh-border);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 var(--gh-border);
+}
+
+/* ---- Tableaux ---- */
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid var(--gh-border);
+}
+
+.markdown-body table tr {
+  background-color: var(--gh-bg);
+  border-top: 1px solid var(--gh-border-muted);
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: var(--gh-code-bg);
+}
+
+/* ---- Images et badges ---- */
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--gh-bg);
+}
+
+/* Badges (shields.io etc.) : rendus en ligne sans fond */
+.markdown-body img[src*="shields.io"],
+.markdown-body img[src*="badge"] {
+  display: inline-block;
+  vertical-align: middle;
+  background: transparent;
+}
+
+/* ---- Séparateur ---- */
+.markdown-body hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--gh-border);
+  border: 0;
+  border-radius: 2px;
+}
+
+/* ---- Notes de bas de page (pulldown-cmark) ---- */
+.markdown-body .footnote-definition {
+  display: flex;
+  gap: 0.5em;
+  font-size: 0.875em;
+  color: var(--gh-text-muted);
+  margin-bottom: 8px;
+}
+
+.markdown-body .footnote-definition p {
+  display: inline;
+  margin: 0;
+}
+
+.markdown-body .footnote-definition-label {
+  font-weight: 600;
+  vertical-align: super;
+  font-size: 0.75em;
+}
+
+.markdown-body sup a {
+  text-decoration: none;
+}
+
+/* ---- Surlignage ---- */
+.markdown-body mark {
+  background-color: var(--gh-mark-bg);
+  color: var(--gh-text);
+}
+
+/* ======================================================================
+ * Impression / export PDF
+ * ==================================================================== */
+
+/* Classes utilitaires de saut de page utilisables dans le Markdown
+   (via HTML inline : <div class="page-break"></div>). */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+@media print {
+  .markdown-body {
+    max-width: none;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  /* Éviter les veuves structurelles : pas de titre orphelin en bas de page. */
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Ne pas couper les blocs indivisibles. */
+  .markdown-body pre,
+  .markdown-body blockquote,
+  .markdown-body table,
+  .markdown-body img,
+  .markdown-body .footnote-definition {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .markdown-body pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .markdown-body a {
+    color: var(--gh-accent);
+  }
+}
+
+@page {
+  margin: 20mm 16mm;
+}

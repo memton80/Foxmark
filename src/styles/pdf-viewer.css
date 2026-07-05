@@ -1,0 +1,144 @@
+/*
+ * pdf-viewer.css — Visionneuse PDF (rendu natif via pdfium côté Rust).
+ */
+
+.pdf-pane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+.pdf-toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.pdf-toolbar .page-indicator {
+  color: var(--color-text-secondary);
+  min-width: 90px;
+  text-align: center;
+}
+
+.pdf-toolbar .pdf-search {
+  width: 200px;
+}
+
+.pdf-toolbar .toolbar-spacer {
+  flex: 1;
+}
+
+.pdf-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.pdf-scroll {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-xl);
+}
+
+.pdf-page-image {
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+  background: white;
+  max-width: none;
+}
+
+.pdf-side-panel {
+  flex: none;
+  width: 300px;
+  border-left: 1px solid var(--color-border-soft);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pdf-side-panel.hidden {
+  display: none;
+}
+
+.pdf-side-panel .panel-title {
+  padding: var(--space-md);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdf-text-content {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-md);
+  white-space: pre-wrap;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.6;
+  user-select: text;
+  cursor: text;
+  color: var(--color-text);
+}
+
+.pdf-quote-hint {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-deemphasized);
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.pdf-search-results {
+  flex: 1;
+  overflow: auto;
+  list-style: none;
+  padding: var(--space-sm);
+}
+
+.pdf-search-results li {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-xs);
+  transition: background var(--transition-fast);
+}
+
+.pdf-search-results li:hover {
+  background: var(--color-tab-hover);
+}
+
+.pdf-search-results .result-page {
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-right: var(--space-sm);
+}
+
+.pdf-search-results .result-snippet {
+  color: var(--color-text-secondary);
+}
+
+.pdf-search-results .result-snippet mark {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: 2px;
+}
+
+.pdf-error {
+  margin: auto;
+  max-width: 420px;
+  text-align: center;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}

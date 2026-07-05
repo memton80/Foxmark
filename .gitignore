@@ -1,0 +1,14 @@
+# Frontend
+node_modules/
+dist/
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# Binaire PDFium téléchargé (voir scripts/fetch-pdfium.sh)
+src-tauri/resources/pdfium/*.so
+
+# Divers
+*.log
+.DS_Store

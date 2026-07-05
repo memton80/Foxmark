@@ -1,0 +1,94 @@
+/*
+ * toasts.css — Notifications façon Firefox (coin inférieur, arrondies).
+ */
+
+#toast-root {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 260px;
+  max-width: 420px;
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-md) var(--space-lg);
+  animation: toast-in var(--transition-smooth) both;
+}
+
+.toast.closing {
+  animation: toast-out var(--transition-smooth) both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.toast-badge {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.toast.error .toast-badge {
+  background: var(--color-error);
+}
+
+.toast.success .toast-badge {
+  background: var(--color-success);
+}
+
+.toast-message {
+  flex: 1;
+  line-height: 1.5;
+  user-select: text;
+}
+
+.toast-close {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--color-text-deemphasized);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs);
+  transition: background var(--transition-fast);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.toast-close:hover {
+  background: var(--color-tab-hover);
+  color: var(--color-text);
+}

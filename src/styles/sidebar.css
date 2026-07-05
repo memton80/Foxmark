@@ -1,0 +1,115 @@
+/*
+ * sidebar.css — Panneau latéral rétractable : arborescence du dossier de travail.
+ */
+
+#sidebar {
+  flex: none;
+  width: var(--sidebar-width);
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border-soft);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+#sidebar.collapsed {
+  width: 0;
+  opacity: 0;
+  border-right: none;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sidebar-header .workspace-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-empty {
+  padding: var(--space-lg);
+  color: var(--color-text-deemphasized);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.file-tree {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-sm) var(--space-md);
+  list-style: none;
+}
+
+.file-tree ul {
+  list-style: none;
+  padding-left: var(--space-lg);
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--transition-fast);
+}
+
+.tree-item:hover {
+  background: var(--color-tab-hover);
+}
+
+.tree-item.selected {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.tree-item svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.tree-item .tree-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-dir > .tree-item {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.tree-dir.closed > ul {
+  display: none;
+}
+
+.tree-caret {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  transition: transform var(--transition-fast);
+}
+
+.tree-dir.closed .tree-caret {
+  transform: rotate(-90deg);
+}

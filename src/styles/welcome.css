@@ -1,0 +1,104 @@
+/*
+ * welcome.css — Onglet d'accueil : fichiers récents et actions rapides.
+ */
+
+.welcome-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  background: var(--color-bg);
+  overflow-y: auto;
+  padding: var(--space-xxl);
+}
+
+.welcome-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.welcome-logo .logo-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #ff9a3c, #e3562a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+  box-shadow: var(--shadow-md);
+}
+
+.welcome-logo h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.welcome-logo p {
+  color: var(--color-text-secondary);
+}
+
+.welcome-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.welcome-recents {
+  width: min(560px, 90%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.welcome-recents h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.welcome-recents ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.recent-item:hover {
+  background: var(--color-tab-hover);
+  border-color: var(--color-border);
+}
+
+.recent-item .recent-name {
+  font-weight: 500;
+}
+
+.recent-item .recent-path {
+  flex: 1;
+  color: var(--color-text-deemphasized);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  text-align: left;
+}
