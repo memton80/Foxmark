@@ -54,12 +54,13 @@ body {
 }
 
 /* Chaque onglet garde sa vue vivante ; seul l'actif est affiché. */
-.tab-content {
+/* Sélecteur ancré sur #content pour l'emporter sur le display:flex
+   propre à chaque panneau (.welcome-pane, .split-view, .pdf-pane). */
+#content > .tab-content:not(.visible) {
   display: none;
 }
 
-.tab-content.visible {
-  display: flex;
+#content > .tab-content.visible {
   flex: 1;
   min-width: 0;
 }
