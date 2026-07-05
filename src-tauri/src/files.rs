@@ -143,8 +143,8 @@ fn walk_dir(dir: &Path, depth: usize) -> Result<Vec<FileNode>> {
         }
     }
 
-    dirs.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
-    files.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+    dirs.sort_by_key(|node| node.name.to_lowercase());
+    files.sort_by_key(|node| node.name.to_lowercase());
     dirs.extend(files);
     Ok(dirs)
 }
