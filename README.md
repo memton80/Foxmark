@@ -5,7 +5,7 @@ Fedora), écrit en **Rust + Tauri v2**, avec une esthétique inspirée de
 **Firefox** (design Proton) : onglets arrondis, palette sobre, animations
 douces, thème clair/sombre synchronisé avec le système.
 
-Il combine : édition Markdown avancée avec autocomplétion, lecture de PDF
+Foxmark combine : édition Markdown avancée avec autocomplétion, lecture de PDF
 native (PDFium), export Markdown → PDF fidèle au CSS choisi (Chrome
 headless), et une CI GitHub Actions qui produit un paquet `.rpm`.
 
