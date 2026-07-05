@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Foxmark",
+  "version": "0.1.0",
+  "identifier": "org.foxmark.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Foxmark",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 760,
+        "minHeight": 500,
+        "center": true,
+        "dragDropEnabled": true
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["**"]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["rpm", "deb"],
+    "category": "Productivity",
+    "shortDescription": "Éditeur Markdown natif inspiré de Firefox",
+    "longDescription": "Foxmark est un éditeur Markdown pour Linux avec aperçu live, autocomplétion, lecture de PDF et export Markdown → PDF fidèle au CSS choisi.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png"
+    ],
+    "resources": {
+      "../src/styles/export/github-default.css": "export-css/github-default.css",
+      "resources/pdfium": "pdfium"
+    },
+    "linux": {
+      "rpm": {
+        "epoch": 0,
+        "release": "1"
+      },
+      "deb": {
+        "depends": []
+      }
+    }
+  },
+  "plugins": {}
+}

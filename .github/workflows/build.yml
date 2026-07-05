@@ -1,0 +1,95 @@
+# Build + release Foxmark (.rpm pour Fedora, .deb en bonus).
+#
+# - Sur pull request : build de vérification (fmt, clippy, tests, bundle).
+# - Sur tag v* : build puis publication du .rpm en release GitHub.
+#
+# Le bundler Tauri génère un .rpm valide depuis Ubuntu grâce à
+# cargo-generate-rpm intégré ; ubuntu-24.04 fournit libwebkit2gtk-4.1.
+name: build
+
+on:
+  pull_request:
+  push:
+    tags:
+      - "v*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # publication des releases
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dépendances système Tauri (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Toolchain Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Dépendances npm
+        run: npm ci
+
+      - name: PDFium (embarqué dans le bundle)
+        run: ./scripts/fetch-pdfium.sh x64
+
+      - name: Format Rust
+        run: cargo fmt --check
+        working-directory: src-tauri
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+        working-directory: src-tauri
+
+      - name: Tests Rust
+        run: cargo test
+        working-directory: src-tauri
+
+      - name: Build Tauri (bundle rpm + deb)
+        run: npm run tauri build -- --bundles rpm,deb
+
+      - name: Artefacts (vérification PR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: foxmark-packages
+          path: |
+            src-tauri/target/release/bundle/rpm/*.rpm
+            src-tauri/target/release/bundle/deb/*.deb
+          if-no-files-found: error
+
+      - name: Release GitHub (tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            src-tauri/target/release/bundle/rpm/*.rpm
+            src-tauri/target/release/bundle/deb/*.deb
+          generate_release_notes: true

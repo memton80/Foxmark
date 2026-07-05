@@ -1,0 +1,110 @@
+/*
+ * dialogs.css — Boîtes de dialogue modales (export PDF, confirmations).
+ */
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 20, 26, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.dialog-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dialog {
+  width: min(520px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  transform: translateY(-8px);
+  transition: transform var(--transition-smooth);
+}
+
+.dialog-overlay.open .dialog {
+  transform: translateY(0);
+}
+
+.dialog h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.dialog .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.dialog .field-group > .group-label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.dialog label.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+}
+
+.dialog label.choice:hover {
+  background: var(--color-tab-hover);
+}
+
+.dialog input[type="radio"],
+.dialog input[type="checkbox"] {
+  accent-color: var(--color-accent);
+}
+
+.dialog .file-picker-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.dialog .file-picker-row .picked-file {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed var(--color-border);
+}
+
+.dialog .dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.dialog .dialog-note {
+  color: var(--color-text-deemphasized);
+  line-height: 1.5;
+}
+
+.dialog .row-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}

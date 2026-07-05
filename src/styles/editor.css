@@ -1,0 +1,278 @@
+/*
+ * editor.css — Styles de l'éditeur CodeMirror 6.
+ *
+ * IMPORTANT : nous n'utilisons PAS EditorView.theme() ni HighlightStyle
+ * (qui injecteraient des styles dynamiques dans le DOM). À la place :
+ *   - la coloration syntaxique passe par `classHighlighter` (@lezer/highlight),
+ *     qui pose des classes statiques `tok-*` stylées ici ;
+ *   - l'apparence de l'éditeur est définie sur les classes `.cm-*` publiques.
+ * Toutes les couleurs viennent de theme.css.
+ */
+
+.editor-pane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--editor-bg);
+}
+
+.editor-host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ---- Conteneur CodeMirror ---- */
+.editor-host .cm-editor {
+  flex: 1;
+  min-width: 0;
+  background: var(--editor-bg);
+  color: var(--color-text);
+  font-size: var(--font-size-editor);
+}
+
+.editor-host .cm-editor.cm-focused {
+  outline: none;
+}
+
+.editor-host .cm-scroller {
+  font-family: var(--font-mono);
+  line-height: 1.65;
+  overflow: auto;
+}
+
+.editor-host .cm-content {
+  padding: var(--space-xl) 0;
+  caret-color: var(--editor-cursor);
+}
+
+.editor-host .cm-line {
+  padding: 0 var(--space-xl);
+}
+
+.editor-host .cm-cursor {
+  border-left: 2px solid var(--editor-cursor);
+}
+
+.editor-host .cm-activeLine {
+  background: var(--editor-active-line);
+}
+
+.editor-host .cm-selectionBackground,
+.editor-host .cm-content ::selection {
+  background: var(--editor-selection);
+}
+
+.editor-host .cm-editor .cm-selectionMatch {
+  background: var(--color-accent-soft);
+}
+
+/* ---- Gouttière ---- */
+.editor-host .cm-gutters {
+  background: var(--editor-gutter-bg);
+  color: var(--color-text-deemphasized);
+  border-right: 1px solid var(--color-border-soft);
+}
+
+.editor-host .cm-activeLineGutter {
+  background: var(--editor-active-line);
+  color: var(--color-text-secondary);
+}
+
+.editor-host .cm-foldGutter .cm-gutterElement {
+  padding: 0 var(--space-xs);
+  cursor: pointer;
+}
+
+.editor-host .cm-foldPlaceholder {
+  background: var(--color-accent-soft);
+  border: none;
+  color: var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-sm);
+  margin: 0 var(--space-xs);
+}
+
+/* ---- Panneau de recherche CodeMirror ---- */
+.editor-host .cm-panels {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.editor-host .cm-panels .cm-textfield {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+}
+
+.editor-host .cm-panels .cm-button {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background-image: none;
+}
+
+.editor-host .cm-searchMatch {
+  background: var(--color-accent-soft);
+  border-radius: 2px;
+}
+
+.editor-host .cm-searchMatch-selected {
+  background: var(--editor-selection);
+}
+
+/* ---- Autocomplétion ---- */
+.cm-tooltip {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+.cm-tooltip-autocomplete > ul {
+  font-family: var(--font-ui);
+  max-height: 260px;
+}
+
+.cm-tooltip-autocomplete > ul > li {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  margin: var(--space-xxs) var(--space-xs);
+}
+
+.cm-tooltip-autocomplete > ul > li[aria-selected] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.cm-completionIcon {
+  margin-right: var(--space-sm);
+  opacity: 0.7;
+}
+
+.cm-completionDetail {
+  font-style: normal;
+  color: var(--color-text-deemphasized);
+  margin-left: var(--space-md);
+}
+
+.cm-tooltip-autocomplete > ul > li[aria-selected] .cm-completionDetail {
+  color: var(--color-on-accent);
+  opacity: 0.8;
+}
+
+/* ---- Coloration Markdown (classes statiques @lezer/highlight) ---- */
+.tok-heading {
+  color: var(--syntax-heading);
+  font-weight: 700;
+}
+
+.tok-strong {
+  color: var(--syntax-strong);
+  font-weight: 700;
+}
+
+.tok-emphasis {
+  color: var(--syntax-emphasis);
+  font-style: italic;
+}
+
+.tok-strikethrough {
+  text-decoration: line-through;
+  color: var(--color-text-deemphasized);
+}
+
+.tok-link {
+  color: var(--syntax-link);
+}
+
+.tok-url {
+  color: var(--syntax-link);
+  text-decoration: underline;
+}
+
+.tok-monospace {
+  font-family: var(--font-mono);
+  color: var(--syntax-code);
+}
+
+.tok-quote {
+  color: var(--syntax-quote);
+  font-style: italic;
+}
+
+.tok-meta,
+.tok-processingInstruction,
+.tok-punctuation {
+  color: var(--syntax-meta);
+}
+
+.tok-contentSeparator {
+  color: var(--syntax-meta);
+  font-weight: 700;
+}
+
+.tok-list {
+  color: var(--syntax-atom);
+}
+
+/* Coloration des blocs de code intégrés (langages via language-data) */
+.tok-keyword {
+  color: var(--syntax-keyword);
+}
+
+.tok-string,
+.tok-string2 {
+  color: var(--syntax-string);
+}
+
+.tok-comment,
+.tok-lineComment,
+.tok-blockComment {
+  color: var(--syntax-meta);
+  font-style: italic;
+}
+
+.tok-number,
+.tok-integer,
+.tok-float,
+.tok-bool,
+.tok-atom {
+  color: var(--syntax-atom);
+}
+
+.tok-variableName {
+  color: var(--color-text);
+}
+
+.tok-typeName,
+.tok-className {
+  color: var(--syntax-heading);
+}
+
+.tok-function,
+.tok-propertyName {
+  color: var(--syntax-link);
+}
+
+.tok-operator {
+  color: var(--syntax-emphasis);
+}
+
+.tok-tagName {
+  color: var(--syntax-keyword);
+}
+
+.tok-attributeName {
+  color: var(--syntax-atom);
+}
+
+.tok-invalid {
+  color: var(--color-error);
+}

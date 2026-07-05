@@ -1,0 +1,51 @@
+[package]
+name = "foxmark"
+version = "0.1.0"
+description = "Éditeur Markdown natif pour Linux, inspiré de Firefox (design Proton)"
+authors = ["Foxmark"]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/memton80/Foxmark"
+
+[lib]
+name = "foxmark_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+# Rendu Markdown → HTML (GFM : tables, tâches, strikethrough, footnotes).
+pulldown-cmark = "0.13"
+
+# Export PDF : pilotage de Chrome/Chromium via le protocole DevTools.
+headless_chrome = "1"
+
+# Visionneuse PDF : bindings PDFium (liaison dynamique à l'exécution).
+pdfium-render = { version = "0.8", features = ["image", "thread_safe"] }
+
+# Encodage des rendus de page en PNG pour le frontend.
+image = { version = "0.25", default-features = false, features = ["png"] }
+base64 = "0.22"
+
+# Encodage des chemins en URLs (aperçu : protocole asset, export : file://).
+percent-encoding = "2"
+
+# Slugs d'ancres de titres identiques à ceux du frontend (NFKD).
+unicode-normalization = "0.1"
+
+# Horodatage des fichiers récents et date d'export.
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
+panic = "abort"
