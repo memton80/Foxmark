@@ -1,7 +1,10 @@
 # Build + release Foxmark (.rpm pour Fedora, .deb en bonus).
 #
 # - Sur pull request : build de vérification (fmt, clippy, tests, bundle).
-# - Sur tag v* : build puis publication du .rpm en release GitHub.
+# - Sur push vers main : build puis publication automatique d'une release
+#   GitHub « v<version> » (version lue dans tauri.conf.json) avec les
+#   paquets .rpm/.deb téléchargeables. Bump de version = nouvelle release.
+# - Sur tag v* : même publication (déclenchement manuel possible).
 #
 # Le bundler Tauri génère un .rpm valide depuis Ubuntu grâce à
 # cargo-generate-rpm intégré ; ubuntu-24.04 fournit libwebkit2gtk-4.1.
@@ -10,6 +13,8 @@ name: build
 on:
   pull_request:
   push:
+    branches:
+      - main
     tags:
       - "v*"
 
@@ -76,20 +81,30 @@ jobs:
       - name: Build Tauri (bundle rpm + deb)
         run: npm run tauri build -- --bundles rpm,deb
 
+      - name: Version du projet
+        id: version
+        run: echo "value=$(node -p "require('./src-tauri/tauri.conf.json').version")" >> "$GITHUB_OUTPUT"
+
       - name: Artefacts (vérification PR)
         uses: actions/upload-artifact@v4
         with:
-          name: foxmark-packages
+          name: foxmark-${{ steps.version.outputs.value }}
           path: |
             src-tauri/target/release/bundle/rpm/*.rpm
             src-tauri/target/release/bundle/deb/*.deb
           if-no-files-found: error
 
-      - name: Release GitHub (tags v*)
-        if: startsWith(github.ref, 'refs/tags/v')
+      # Sur main (ou tag v*) : release « v<version> » avec les paquets.
+      # Le tag est créé automatiquement s'il n'existe pas ; re-pousser la
+      # même version met à jour les fichiers de la release existante.
+      - name: Release GitHub
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.version.outputs.value }}
+          name: Foxmark ${{ steps.version.outputs.value }}
           files: |
             src-tauri/target/release/bundle/rpm/*.rpm
             src-tauri/target/release/bundle/deb/*.deb
           generate_release_notes: true
+          make_latest: true
