@@ -19,6 +19,7 @@ import "./styles/welcome.css";
 
 import { open, save, ask } from "@tauri-apps/plugin-dialog";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import type { EditorView } from "@codemirror/view";
 
 import { ipc, type FileNode } from "./lib/ipc";
@@ -845,3 +846,13 @@ function toolbarButton(
 }
 
 new App();
+
+// La fenêtre est créée cachée (tauri.conf.json → visible: false) : on ne
+// l'affiche qu'après le premier rendu peint, pour supprimer l'écran noir
+// du démarrage (la webview met ~1 s à initialiser et peindre la page).
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    const window = getCurrentWindow();
+    void window.show().then(() => window.setFocus());
+  });
+});
