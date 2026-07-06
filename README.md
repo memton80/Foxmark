@@ -14,13 +14,15 @@ headless), et une CI GitHub Actions qui produit un paquet `.rpm`.
 ## Fonctionnalités
 
 ### Éditeur Markdown
-- **Vue scindée** : édition à gauche, aperçu live à droite — l'aperçu est
-  rendu par la *même* fonction Rust que l'export PDF, avec la *même*
-  feuille de style : ce que vous voyez est ce qui sera exporté.
+- **Page d'écriture avec rendu en direct** : un seul bloc — le Markdown se
+  met en forme pendant la frappe (titres dimensionnés, gras/italique réels,
+  code sur fond, marqueurs estompés), colonne centrée façon page.
+- **Aperçu HTML exact** (Ctrl+E, masqué par défaut) : rendu par la *même*
+  fonction Rust que l'export PDF, avec la *même* feuille de style — ce que
+  vous voyez est ce qui sera exporté.
 - **Mode focus** (F11) : masque tout sauf le texte.
-- Coloration syntaxique Markdown complète (titres, gras, italique, code,
-  citations, listes, tableaux) + coloration des blocs de code par langage.
-- Pliage de sections, numéros de ligne, recherche (Ctrl+F).
+- Coloration des blocs de code par langage, pliage de sections,
+  recherche (Ctrl+F).
 - Glisser-déposer d'images : copie automatique dans `assets/` relatif au
   fichier `.md`, insertion du lien à la position du dépôt.
 - Sauvegarde automatique (30 s + perte de focus) et fichiers récents.

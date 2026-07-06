@@ -36,7 +36,9 @@ class Store {
     activeTabId: null,
     workspaceDir: null,
     sidebarVisible: true,
-    previewVisible: true,
+    // La page d'écriture met le Markdown en forme en direct ; l'aperçu
+    // HTML (rendu exact de l'export PDF) s'ouvre à la demande (Ctrl+E).
+    previewVisible: false,
     focusMode: false,
   };
 
