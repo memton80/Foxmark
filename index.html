@@ -6,11 +6,19 @@
     <title>Foxmark</title>
     <!--
       Règle du projet : AUCUN style dans le HTML.
-      Toutes les feuilles de style vivent dans /src/styles/*.css
-      et sont importées depuis src/main.ts (Vite les émet en <link> externes).
+      Toutes les feuilles de style vivent dans /src/styles/*.css.
+      splash.css est liée ici (feuille externe) pour que l'écran de
+      chargement s'affiche dès le premier rendu, avant le bundle JS.
     -->
+    <link rel="stylesheet" href="/src/styles/splash.css" />
   </head>
   <body>
+    <!-- Écran de chargement : visible dès que la webview peint,
+         retiré par main.ts une fois l'interface construite. -->
+    <div id="splash" aria-hidden="true">
+      <div class="splash-mark">F</div>
+      <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+    </div>
     <div id="app">
       <header id="chrome">
         <div id="tab-bar"></div>
