@@ -1,6 +1,6 @@
 [package]
 name = "foxmark"
-version = "1.1.0"
+version = "1.1.1"
 description = "Éditeur Markdown natif pour Linux, inspiré de Firefox (design Proton)"
 authors = ["Foxmark"]
 edition = "2021"
