@@ -28,10 +28,10 @@ import {
   foldKeymap,
   indentOnInput,
 } from "@codemirror/language";
-import { classHighlighter } from "@lezer/highlight";
+import { classHighlighter, tagHighlighter, tags } from "@lezer/highlight";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
-import { lineNumbers, highlightActiveLine, highlightActiveLineGutter } from "@codemirror/view";
+import { highlightActiveLine } from "@codemirror/view";
 import { markdownKeymap } from "./markdown-commands";
 import {
   createCompletionSources,
@@ -53,6 +53,20 @@ const markdownCloseBrackets = markdownLanguage.data.of({
   },
 });
 
+/**
+ * Classes par niveau de titre (tok-heading1 … tok-heading6) pour le rendu
+ * « en direct » dans la page d'écriture : tailles définies dans editor.css.
+ * Toujours des classes statiques — aucun style injecté.
+ */
+const headingLevelHighlighter = tagHighlighter([
+  { tag: tags.heading1, class: "tok-heading1" },
+  { tag: tags.heading2, class: "tok-heading2" },
+  { tag: tags.heading3, class: "tok-heading3" },
+  { tag: tags.heading4, class: "tok-heading4" },
+  { tag: tags.heading5, class: "tok-heading5" },
+  { tag: tags.heading6, class: "tok-heading6" },
+]);
+
 export function createEditor(
   parent: HTMLElement,
   initialContent: string,
@@ -64,14 +78,14 @@ export function createEditor(
   const state = EditorState.create({
     doc: initialContent,
     extensions: [
-      lineNumbers(),
+      // Pas de numéros de ligne : la zone d'écriture est une « page »
+      // unique où le Markdown se met en forme pendant la frappe.
       foldGutter(),
       history(),
       drawSelection(),
       dropCursor(),
       indentOnInput(),
       highlightActiveLine(),
-      highlightActiveLineGutter(),
       highlightSelectionMatches(),
       EditorView.lineWrapping,
       markdown({
@@ -87,6 +101,7 @@ export function createEditor(
         icons: true,
       }),
       syntaxHighlighting(classHighlighter),
+      syntaxHighlighting(headingLevelHighlighter),
       keymap.of([
         {
           key: "Mod-s",

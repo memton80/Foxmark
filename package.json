@@ -1,7 +1,7 @@
 {
   "name": "foxmark",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Éditeur Markdown natif pour Linux, inspiré de Firefox (design Proton)",
   "scripts": {
