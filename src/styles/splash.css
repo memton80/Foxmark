@@ -1,0 +1,81 @@
+/*
+ * splash.css — Écran de chargement au démarrage.
+ *
+ * Liée directement dans <head> (feuille externe) pour être appliquée dès
+ * le premier rendu de la webview, avant l'exécution du bundle JS. Elle est
+ * volontairement autonome (pas de variables de theme.css : en mode dev,
+ * celles-ci n'arrivent qu'avec le bundle, donc trop tard pour le splash).
+ */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: #f9f9fb;
+  opacity: 1;
+  transition: opacity 250ms ease-out;
+}
+
+#splash.splash-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff9a3c, #e3562a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: system-ui, sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(21, 20, 26, 0.18);
+}
+
+.splash-bar {
+  width: 160px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(21, 20, 26, 0.12);
+  overflow: hidden;
+}
+
+.splash-bar-fill {
+  width: 40%;
+  height: 100%;
+  border-radius: inherit;
+  background: #0060df;
+  animation: splash-slide 1.1s ease-in-out infinite;
+}
+
+@keyframes splash-slide {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #splash {
+    background: #1c1b22;
+  }
+
+  .splash-bar {
+    background: rgba(251, 251, 254, 0.12);
+  }
+
+  .splash-bar-fill {
+    background: #4d9fff;
+  }
+}

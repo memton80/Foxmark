@@ -845,3 +845,10 @@ function toolbarButton(
 }
 
 new App();
+
+// L'interface est construite : retire l'écran de chargement en fondu.
+const splash = document.getElementById("splash");
+if (splash) {
+  splash.classList.add("splash-done");
+  window.setTimeout(() => splash.remove(), 400);
+}
